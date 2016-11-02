@@ -22,24 +22,30 @@ public class incomingCall extends BroadcastReceiver {
 
         if(intent.getAction().equals("android.intent.action.PHONE_STATE")){
             String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
-            if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)){
+            if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
                 numberPhone = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
                 Log.v("CAL", "A call from " + numberPhone);
                 Log.i("MSG", MainActivity.message);
                 MainActivity.message = "This is an automated message!\nThe person you called is available at this area: "
                         + MainActivity.message +
                         "\nUse Google map to see the detected position.";
-                try {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
-                    Log.i("MSG", MainActivity.message);
-                    Log.v("SMS", "Message sent successfully!");
-                } catch (Exception e) {
-                    Log.e("SMS", "Message not sent!");
-                            e.printStackTrace();
+                if (MainActivity.toCall = false) {
+                    try {
+                        SmsManager smsManager = SmsManager.getDefault();
+                        smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
+                        Log.i("MSG", MainActivity.message);
+                        Log.v("SMS", "Message sent successfully!");
+                    } catch (Exception e) {
+                        Log.e("SMS", "Message not sent!");
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.v("CAL", "Dialing...");
+                    MainActivity.toCall = false;
                 }
+
             }
         }
-
     }
+
 }

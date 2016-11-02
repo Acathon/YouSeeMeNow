@@ -14,6 +14,7 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     public static String message;
+    public static Boolean toCall = true;
     public File save;
     public String filename = "contact";
     private TextView textView;
