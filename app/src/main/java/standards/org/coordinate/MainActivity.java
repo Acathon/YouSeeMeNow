@@ -1,35 +1,22 @@
 package standards.org.coordinate;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import static android.location.LocationProvider.OUT_OF_SERVICE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textView;
     public static String message;
-    public TextView textView1;
     public File save;
     public String filename = "contact";
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +38,13 @@ public class MainActivity extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         textView = (TextView) findViewById(R.id.textView);
-        // textView1 = (TextView) findViewById(R.id.number);
-
 
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Log.v("GPS","LATITUDE:  "+location.getLatitude()+"\nLONGITUDE: "+location.getLongitude());
-                message = (location.getLatitude()+" "+location.getLongitude()+" "+location.getAccuracy()+"M.");
-                textView.setText("LATITUDE: "+location.getLatitude()+"\nLONGITUDE: "+location.getLongitude()+"\nALTITUDE: "+location.getAltitude()+"\nACCURACY: "+location.getAccuracy());
+                Log.v("GPS", "LATITUDE:  " + location.getLatitude() + " LONGITUDE: " + location.getLongitude() + " Accuracy: " + location.getAccuracy() + "M");
+                message = (location.getLatitude() + " " + location.getLongitude() + " around " + location.getAccuracy() + "M.");
+                textView.setText("LATITUDE: " + location.getLatitude() + "\nLONGITUDE: " + location.getLongitude() + "\nALTITUDE: " + "\nACCURACY: " + location.getAccuracy());
 
             }
 
@@ -89,17 +74,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
     }
 

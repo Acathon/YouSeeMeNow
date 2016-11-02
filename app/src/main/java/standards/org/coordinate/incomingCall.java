@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.TextView;
 
 /**
  * Created by mustapha on 17/10/2016.
@@ -27,8 +26,9 @@ public class incomingCall extends BroadcastReceiver {
                 numberPhone = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
                 Log.v("CAL", "A call from " + numberPhone);
                 Log.i("MSG", MainActivity.message);
-                MainActivity.message = "This is an automated message!\nThe person you called is available at this area: " + MainActivity.message +
-                                "\nUse Google map to see the detected position.";
+                MainActivity.message = "This is an automated message!\nThe person you called is available at this area: "
+                        + MainActivity.message +
+                        "\nUse Google map to see the detected position.";
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
