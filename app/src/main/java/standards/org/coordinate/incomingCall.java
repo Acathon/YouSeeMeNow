@@ -29,23 +29,16 @@ public class incomingCall extends BroadcastReceiver {
                 MainActivity.message = "This is an automated message!\nThe person you called is available at this area: "
                         + MainActivity.message +
                         "\nUse Google map to see the detected position.";
-                if (MainActivity.toCall = false) {
-                    try {
-                        SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
-                        Log.i("MSG", MainActivity.message);
-                        Log.v("SMS", "Message sent successfully!");
-                    } catch (Exception e) {
-                        Log.e("SMS", "Message not sent!");
-                        e.printStackTrace();
-                    }
-                } else {
-                    Log.v("CAL", "Dialing...");
-                    MainActivity.toCall = false;
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
+                    Log.v("SMS", "Message sent successfully!");
+                } catch (Exception e) {
+                    Log.e("SMS", "Message not sent!");
+                    e.printStackTrace();
                 }
-
             }
         }
-    }
 
+    }
 }
