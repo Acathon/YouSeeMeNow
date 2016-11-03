@@ -10,12 +10,13 @@ import android.util.Log;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     public static String message;
-    public File save;
-    public String filename = "contact";
+    public File file;
+    public String filename = "contact.dat";
     private TextView textView;
 
     @Override
@@ -23,17 +24,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*try {
-            save = new File(getApplicationContext().getFilesDir(), filename);
-            if(save.exists()){
-                Log.v("FIL","Storage file exist!");
+        try {
+
+            file = new File(getApplicationContext().getFilesDir() + filename);
+            file.createNewFile();
+            FileOutputStream outFile = new FileOutputStream(file, false);
+            if (file.exists()) {
+                Log.i("FIL", "STORAGE FILE FOUND!" + getFilesDir() + filename);
             } else {
-                Log.i("FIL", "Storage file created!");
+                Log.i("FIL", "STORAGE FILE NOT FOUND!" + getFilesDir() + filename);
             }
+
         } catch (Exception e){
-            Log.e("FIL", "Storage file creation failed/exist!");
+
+            Log.e("FIL", "STORAGE FILE CREATION NOT ALLOWED!" + getFilesDir());
             e.printStackTrace();
-        }*/
+
+        }
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 

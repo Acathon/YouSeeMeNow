@@ -32,7 +32,7 @@ public class incomingCall extends BroadcastReceiver {
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
-                    Log.v("SMS", "Message sent successfully!");
+                    Log.i("SMS", "Message sent successfully!");
                 } catch (Exception e) {
                     Log.e("SMS", "Message not sent!");
                     e.printStackTrace();
