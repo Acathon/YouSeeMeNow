@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String message;
     public File file;
-    public String filename = "contact.dat";
+    public String filename = "/contact.dat";
     private TextView textView;
 
     @Override
@@ -26,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             file = new File(getApplicationContext().getFilesDir() + filename);
-            file.createNewFile();
             if (file.exists()) {
-                Log.i("FIL", "STORAGE FILE FOUND, CREATED!\n" + getFilesDir() + filename);
+                Log.i("FIL", "STORAGE FILE FOUND!\n" + getFilesDir() + filename);
             } else {
-                Log.i("FIL", "STORAGE FILE NOT FOUND!\n" + getFilesDir() + filename);
+                file.createNewFile();
+                Log.i("FIL", "STORAGE FILE CREATED!\n" + getFilesDir() + filename);
             }
 
         } catch (Exception e){
