@@ -16,7 +16,7 @@ public class outgoingCall extends BroadcastReceiver
     public void onReceive(Context context, Intent intent) {
 
         final String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
-        Log.v("CAL", "Try to call: " + number);
+        Log.v("CAL", "DIALING: " + number);
         // TO-DO nothing!!
         return;
     }
