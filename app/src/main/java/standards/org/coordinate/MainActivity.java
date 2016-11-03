@@ -10,6 +10,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +25,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        file = new File(getApplicationContext().getFilesDir() + filename);
+
+        try {
+
+            file = new File(getApplicationContext().getFilesDir() + filename);
+            if (file.exists()) {
+                Log.i("FIL", "STORAGE FILE FOUND!\n" + getFilesDir() + MainActivity.filename);
+            } else {
+                file.createNewFile();
+                Log.i("FIL", "STORAGE FILE CREATED!\n" + getFilesDir() + MainActivity.filename);
+            }
+
+        } catch (FileNotFoundException e) {
+            Log.e("FIL", "STORAGE FILE NOT FOUND!");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e("FIL", "STORAGE FILE READ/WRITE FAILED!");
+            e.printStackTrace();
+        } catch (Exception e) {
+            Log.e("FIL", "STORAGE FILE ACCESS FAILED!");
+            e.printStackTrace();
+        }
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
