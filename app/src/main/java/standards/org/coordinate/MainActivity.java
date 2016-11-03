@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             file = new File(getApplicationContext().getFilesDir() + filename);
             file.createNewFile();
             if (file.exists()) {
-                Log.i("FIL", "STORAGE FILE FOUND\ CREATED!\n" + getFilesDir() + filename);
+                Log.i("FIL", "STORAGE FILE FOUND, CREATED!\n" + getFilesDir() + filename);
             } else {
                 Log.i("FIL", "STORAGE FILE NOT FOUND!\n" + getFilesDir() + filename);
             }
