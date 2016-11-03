@@ -14,8 +14,8 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity {
 
     public static String message;
-    public File file;
-    public String filename = "/contact.dat";
+    public static File file;
+    public static String filename = "/contact.dat";
     private TextView textView;
 
     @Override
@@ -23,22 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-
-            file = new File(getApplicationContext().getFilesDir() + filename);
-            if (file.exists()) {
-                Log.i("FIL", "STORAGE FILE FOUND!\n" + getFilesDir() + filename);
-            } else {
-                file.createNewFile();
-                Log.i("FIL", "STORAGE FILE CREATED!\n" + getFilesDir() + filename);
-            }
-
-        } catch (Exception e){
-
-            Log.e("FIL", "STORAGE FILE CREATION NOT ALLOWED!");
-            e.printStackTrace();
-
-        }
+        file = new File(getApplicationContext().getFilesDir() + filename);
 
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
