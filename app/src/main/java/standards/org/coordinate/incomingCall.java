@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -63,7 +62,7 @@ public class incomingCall extends BroadcastReceiver {
                         "\nUse Google map to see the detected position.";
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
-                    Toast.makeText(context.getApplicationContext(), compareTo + " = " + numberPhone, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context.getApplicationContext(), compareTo + " = " + numberPhone, Toast.LENGTH_LONG).show();
                     if (numberPhone.equals(compareTo)) {
                         smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
                         Log.i("SMS", "MESSAGE SENT SUCCESSFULLY!");
