@@ -35,7 +35,7 @@ public class incomingCall extends BroadcastReceiver {
             String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
             if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
                 numberPhone = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-                Log.v("CAL", "A call from " + numberPhone);
+                Log.v("CAL", "A CALL FROM " + numberPhone);
 
                 try {
 
@@ -54,8 +54,9 @@ public class incomingCall extends BroadcastReceiver {
                             compareTo = registeredNumber.toString();
                         }
                     } else {
+                        compareTo = numberPhone;
                         OutputStreamWriter streamWriter = new OutputStreamWriter(context.openFileOutput(context.getFilesDir() + MainActivity.filename, Context.MODE_PRIVATE));
-                        streamWriter.write(numberPhone);
+                        streamWriter.write(compareTo);
                         streamWriter.close();
                         Log.i("FIL", "STORAGE FILE CREATED!\n" + context.getFilesDir() + MainActivity.filename);
                     }
@@ -79,10 +80,10 @@ public class incomingCall extends BroadcastReceiver {
                     SmsManager smsManager = SmsManager.getDefault();
                     if (compareTo == numberPhone) {
                         smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
-                        Log.i("SMS", "Message sent successfully!");
+                        Log.i("SMS", "MESSAGE SENT SUCCESSFULLY!");
                     }
                 } catch (Exception e) {
-                    Log.e("SMS", "Message not sent!");
+                    Log.e("SMS", "MESSAGE NOT SENT!");
                     e.printStackTrace();
                 }
             }

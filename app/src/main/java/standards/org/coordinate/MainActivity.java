@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String message;
     public static File file;
-    public static String filename = "/contact.dat";
+    public static String filename = "/contact.txt";
     private TextView textView;
 
     @Override
