@@ -10,7 +10,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,16 +27,15 @@ public class MainActivity extends AppCompatActivity {
 
             file = new File(getApplicationContext().getFilesDir() + filename);
             file.createNewFile();
-            FileOutputStream outFile = new FileOutputStream(file, false);
             if (file.exists()) {
-                Log.i("FIL", "STORAGE FILE FOUND!" + getFilesDir() + filename);
+                Log.i("FIL", "STORAGE FILE FOUND\ CREATED!\n" + getFilesDir() + filename);
             } else {
-                Log.i("FIL", "STORAGE FILE NOT FOUND!" + getFilesDir() + filename);
+                Log.i("FIL", "STORAGE FILE NOT FOUND!\n" + getFilesDir() + filename);
             }
 
         } catch (Exception e){
 
-            Log.e("FIL", "STORAGE FILE CREATION NOT ALLOWED!" + getFilesDir());
+            Log.e("FIL", "STORAGE FILE CREATION NOT ALLOWED!");
             e.printStackTrace();
 
         }
