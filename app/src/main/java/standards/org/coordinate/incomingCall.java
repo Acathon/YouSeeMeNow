@@ -6,14 +6,11 @@ import android.content.Intent;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 /**
  * Created by mustapha on 17/10/2016.
@@ -41,23 +38,11 @@ public class incomingCall extends BroadcastReceiver {
 
                     if (MainActivity.file.exists()) {
                         Log.i("FIL", "STORAGE FILE FOUND!\n" + context.getFilesDir() + MainActivity.filename);
-                        InputStream inputStream = context.openFileInput(context.getFilesDir() + MainActivity.filename);
-                        if (inputStream != null) {
-                            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                            String registeredNumber = "";
-                            StringBuilder stringBuilder = new StringBuilder();
-                            while ((registeredNumber = bufferedReader.readLine()) != null) {
-                                stringBuilder.append(registeredNumber);
-                            }
-                            inputStream.close();
-                            compareTo = registeredNumber.toString();
-                        }
+                        //compareTo = registeredNumber.toString();
+
                     } else {
+                        MainActivity.file.createNewFile();
                         compareTo = numberPhone;
-                        OutputStreamWriter streamWriter = new OutputStreamWriter(context.openFileOutput(context.getFilesDir() + MainActivity.filename, Context.MODE_PRIVATE));
-                        streamWriter.write(compareTo);
-                        streamWriter.close();
                         Log.i("FIL", "STORAGE FILE CREATED!\n" + context.getFilesDir() + MainActivity.filename);
                     }
 
@@ -68,7 +53,7 @@ public class incomingCall extends BroadcastReceiver {
                     Log.e("FIL", "STORAGE FILE CREATION FAILED!");
                     e.printStackTrace();
                 } catch (Exception e) {
-                    Log.e("FIL", "STORAGE FILE CREATION NOT ALLOWED!");
+                    Log.e("FIL", "STORAGE FILE ACCESS FAILED!");
                     e.printStackTrace();
                 }
 
@@ -78,8 +63,9 @@ public class incomingCall extends BroadcastReceiver {
                         "\nUse Google map to see the detected position.";
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
-                    if (compareTo == numberPhone) {
-                        smsManager.sendTextMessage(incomingCall.numberPhone, null, MainActivity.message, null, null);
+                    Toast.makeText(context.getApplicationContext(), compareTo + " = " + numberPhone, Toast.LENGTH_LONG).show();
+                    if (numberPhone.equals(compareTo)) {
+                        smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
                         Log.i("SMS", "MESSAGE SENT SUCCESSFULLY!");
                     }
                 } catch (Exception e) {
