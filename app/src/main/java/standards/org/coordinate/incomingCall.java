@@ -7,6 +7,12 @@ import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Created by mustapha on 17/10/2016.
  */
@@ -28,14 +34,42 @@ public class incomingCall extends BroadcastReceiver {
                 numberPhone = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
                 Log.v("CAL", "A CALL FROM " + numberPhone);
 
-                Log.i("MSG", MainActivity.message);
+                try {
+                    if (MainActivity.file.length() == 8) {
+                        FileReader fileReader = new FileReader(MainActivity.file);
+                        BufferedReader bufferedReader = new BufferedReader(fileReader);
+                        compareTo = bufferedReader.readLine();
+                        bufferedReader.close();
+                        fileReader.close();
+                        //if (compareTo.equals(numberPhone)){
+                        //    Toast.makeText(context,"YES",Toast.LENGTH_LONG).show();
+                        //}
+                    } else {
+                        FileWriter fileWriter = new FileWriter(MainActivity.file);
+                        fileWriter.write(numberPhone);
+                        fileWriter.flush();
+                        fileWriter.close();
+                        compareTo = numberPhone;
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                Log.v("MSG", MainActivity.message);
                 MainActivity.message = "This is an automated message!\nThe person you called is available at this area: "
                         + MainActivity.message +
                         "\nUse Google map to see the detected position.";
                 try {
                     SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
-                    Log.i("SMS", "MESSAGE SENT SUCCESSFULLY!");
+                    if (compareTo.equals(numberPhone)) {
+                        //Toast.makeText(context, compareTo + " = " + numberPhone, Toast.LENGTH_LONG).show();
+                        smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
+                        Log.v("SMS", "MESSAGE SENT SUCCESSFULLY!");
+                    }
                 } catch (Exception e) {
                     Log.e("SMS", "MESSAGE NOT SENT!");
                     e.printStackTrace();

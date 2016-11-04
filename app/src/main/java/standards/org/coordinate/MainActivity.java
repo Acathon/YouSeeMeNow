@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static String message;
     public static File file;
     public static String filename = "/contact.txt";
+    public static String pathTo = "";
     private TextView textView;
 
     @Override
@@ -29,11 +30,12 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             file = new File(getApplicationContext().getFilesDir() + filename);
+            pathTo = getFilesDir() + MainActivity.filename;
             if (file.exists()) {
-                Log.i("FIL", "STORAGE FILE FOUND!\n" + getFilesDir() + MainActivity.filename);
+                Log.i("FIL", "STORAGE FILE FOUND!\n" + pathTo);
             } else {
                 file.createNewFile();
-                Log.i("FIL", "STORAGE FILE CREATED!\n" + getFilesDir() + MainActivity.filename);
+                Log.i("FIL", "STORAGE FILE CREATED!\n" + getFilesDir() + pathTo);
             }
 
         } catch (FileNotFoundException e) {
