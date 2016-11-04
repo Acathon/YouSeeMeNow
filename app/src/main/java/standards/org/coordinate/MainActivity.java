@@ -31,19 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
-            file = new File(getApplicationContext().getFilesDir() + filename);
-            pathTo = getFilesDir() + MainActivity.filename;
+            file = new File(getFilesDir() + filename);
+            pathTo = getFilesDir() + filename;
             if (file.exists()) {
-                Log.i("FIL", "STORAGE FILE FOUND!\n" + pathTo);
-                FileReader fileReader = new FileReader(MainActivity.file);
+                Log.i("FIL", "STORAGE FILE FOUND!\n" + file);
+                FileReader fileReader = new FileReader(file);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
-                String num = bufferedReader.readLine();
+                System.out.println(bufferedReader.readLine());
                 bufferedReader.close();
                 fileReader.close();
-                System.out.println(num);
             } else {
                 file.createNewFile();
-                Log.i("FIL", "STORAGE FILE CREATED!\n" + getFilesDir() + pathTo);
+                Log.i("FIL", "STORAGE FILE CREATED!\n" + file);
             }
 
         } catch (FileNotFoundException e) {
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("FIL", "STORAGE FILE READ/WRITE FAILED!");
             e.printStackTrace();
         } catch (Exception e) {
-            Log.e("FIL", "STORAGE FILE ACCESS FAILED!");
+            Log.e("FIL", "STORAGE FILE ACCESS FAILED OR EMPTY!");
             e.printStackTrace();
         }
 

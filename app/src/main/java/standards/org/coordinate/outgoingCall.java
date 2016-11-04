@@ -9,8 +9,7 @@ import android.util.Log;
  * Created by mustapha on 18/10/2016.
  */
 
-public class outgoingCall extends BroadcastReceiver
-{
+public class outgoingCall extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
