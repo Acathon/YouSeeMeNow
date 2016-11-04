@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
             pathTo = getFilesDir() + MainActivity.filename;
             if (file.exists()) {
                 Log.i("FIL", "STORAGE FILE FOUND!\n" + pathTo);
+                FileReader fileReader = new FileReader(MainActivity.file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String num = bufferedReader.readLine();
+                bufferedReader.close();
+                fileReader.close();
+                System.out.println(num);
             } else {
                 file.createNewFile();
                 Log.i("FIL", "STORAGE FILE CREATED!\n" + getFilesDir() + pathTo);
@@ -78,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         // String locationProvider = LocationManager.NETWORK_PROVIDER;

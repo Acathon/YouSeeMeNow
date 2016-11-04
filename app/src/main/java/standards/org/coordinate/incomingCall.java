@@ -41,15 +41,19 @@ public class incomingCall extends BroadcastReceiver {
                         compareTo = bufferedReader.readLine();
                         bufferedReader.close();
                         fileReader.close();
-                        //if (compareTo.equals(numberPhone)){
-                        //    Toast.makeText(context,"YES",Toast.LENGTH_LONG).show();
-                        //}
+
+                        if (compareTo.equals(numberPhone)) {
+                            Log.i("FIL", "PHONE NUMBER FOUND!");
+                        }
                     } else {
                         FileWriter fileWriter = new FileWriter(MainActivity.file);
                         fileWriter.write(numberPhone);
                         fileWriter.flush();
                         fileWriter.close();
                         compareTo = numberPhone;
+
+                        if (MainActivity.filename.length() == 8)
+                            Log.i("FIL", "PHONE NUMBER SAVED!");
                     }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -63,16 +67,15 @@ public class incomingCall extends BroadcastReceiver {
                 MainActivity.message = "This is an automated message!\nThe person you called is available at this area: "
                         + MainActivity.message +
                         "\nUse Google map to see the detected position.";
-                try {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    if (compareTo.equals(numberPhone)) {
-                        //Toast.makeText(context, compareTo + " = " + numberPhone, Toast.LENGTH_LONG).show();
+                if (compareTo.equals(numberPhone)) {
+                    try {
+                        SmsManager smsManager = SmsManager.getDefault();
                         smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
                         Log.v("SMS", "MESSAGE SENT SUCCESSFULLY!");
+                    } catch (Exception e) {
+                        Log.e("SMS", "MESSAGE NOT SENT!");
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    Log.e("SMS", "MESSAGE NOT SENT!");
-                    e.printStackTrace();
                 }
             }
         }
