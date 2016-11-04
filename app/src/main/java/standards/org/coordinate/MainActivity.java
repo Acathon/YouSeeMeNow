@@ -1,3 +1,11 @@
+//------------------------------------------------
+//    Created by mustapha essouri
+//    facebook: fb.com/mustapha.essouri
+//    twitter: twitter.com/mustapha.essouri
+//    instagram: @mustaphaessouri
+//    email: mustapha.essouri@gmail.com
+//------------------------------------------------
+
 package standards.org.coordinate;
 
 import android.content.Context;
