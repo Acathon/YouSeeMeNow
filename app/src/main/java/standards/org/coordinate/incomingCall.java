@@ -64,19 +64,30 @@ public class incomingCall extends BroadcastReceiver {
                 }
 
                 Log.v("MSG", MainActivity.message);
-                MainActivity.message = "This is an automated message!\nThe person you called is available at this area: "
-                        + MainActivity.message +
-                        "\nUse Google map to see the detected position.";
-                if (compareTo.equals(numberPhone)) {
-                    try {
-                        SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
-                        Log.v("SMS", "MESSAGE SENT SUCCESSFULLY!");
-                    } catch (Exception e) {
-                        Log.e("SMS", "MESSAGE NOT SENT!");
-                        e.printStackTrace();
+                SmsManager smsManager = SmsManager.getDefault();
+
+                if (MainActivity.message == null) {
+                    //TO-DO nothing
+                    Log.e("SMS", "POSITION NOT DETECTED, CANNOT SEND A MESSAGE!");
+                    return;
+                } else {
+                    MainActivity.message = "This is an automated message!\nThe person you called is available at this area: "
+                            + MainActivity.message +
+                            "\nUse Google map to see the detected position.";
+                    if (compareTo.equals(numberPhone)) {
+                        try {
+                            smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
+                            Log.v("SMS", "MESSAGE SENT SUCCESSFULLY!");
+                        } catch (Exception e) {
+                            Log.e("SMS", "MESSAGE NOT SENT!");
+                            e.printStackTrace();
+                        }
+                    } else {
+                        //TO-DO nothing
+                        return;
                     }
                 }
+
             }
         }
 

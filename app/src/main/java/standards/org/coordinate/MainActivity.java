@@ -9,10 +9,13 @@
 package standards.org.coordinate;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public static File file;
     public static String filename = "/contact.txt";
     public static String pathTo = "";
+    public Intent intent;
+    String saved;
     private TextView textView;
 
     @Override
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textView = (TextView) findViewById(R.id.textView);
 
         try {
 
@@ -45,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("FIL", "STORAGE FILE FOUND!\n" + file);
                 FileReader fileReader = new FileReader(file);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
-                System.out.println(bufferedReader.readLine());
+                saved = bufferedReader.readLine();
+                System.out.println(saved);
                 bufferedReader.close();
                 fileReader.close();
             } else {
@@ -63,40 +70,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e("FIL", "STORAGE FILE ACCESS FAILED OR EMPTY!");
             e.printStackTrace();
         }
-
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        textView = (TextView) findViewById(R.id.textView);
-
-        LocationListener locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Log.v("GPS", "LATITUDE:  " + location.getLatitude() + " LONGITUDE: " + location.getLongitude() + " Accuracy: " + location.getAccuracy() + "M");
-                message = (location.getLatitude() + " " + location.getLongitude() + " around " + location.getAccuracy() + "M.");
-                textView.setText("LATITUDE: " + location.getLatitude() + "\nLONGITUDE: " + location.getLongitude() + "\nALTITUDE: " + "\nACCURACY: " + location.getAccuracy());
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         // String locationProvider = LocationManager.NETWORK_PROVIDER;
         // Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
@@ -122,6 +95,65 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Log.v("GPS", "LATITUDE:  " + location.getLatitude() + " LONGITUDE: " + location.getLongitude() + " Accuracy: " + location.getAccuracy() + "M");
+                message = (location.getLatitude() + " " + location.getLongitude() + " around " + location.getAccuracy() + "M.");
+                textView.setText("LATITUDE: " + location.getLatitude() + "\nLONGITUDE: " + location.getLongitude() + "\nACCURACY: " + location.getAccuracy()
+                        + "\nLINKED: " + saved);
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        } else {
+            Log.v("GPS", "NETWORK PROVIDER IS DISABLED!");
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Wi-Fi & mobile network location is not enabled, you must activate it before!").setTitle("Wi-Fi & mobile network location");
+            builder.setNegativeButton("Location settings", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("GPS", "NETWORK IS NOT ACTIVATED!");
+                    intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                }
+            });
+            builder.setPositiveButton("Quit", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //TO-DO nothing
+                    finish();
+                    System.exit(0);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        } else {
+            Log.v("GPS", "GPS PROVIDER IS DISABLED!");
+            //TO-DO nothing
+        }
+
     }
 
 }

@@ -14,8 +14,8 @@ public class outgoingCall extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        final String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
-        Log.v("CAL", "DIALING: " + number);
+        final String numberPhone = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+        Log.v("CAL", "DIALING: " + numberPhone);
         // TO-DO nothing!!
         return;
     }
