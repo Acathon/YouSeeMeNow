@@ -64,7 +64,6 @@ public class incomingCall extends BroadcastReceiver {
                 }
 
                 Log.v("MSG", MainActivity.message);
-                SmsManager smsManager = SmsManager.getDefault();
 
                 if (MainActivity.message == null) {
                     //TO-DO nothing
@@ -76,6 +75,7 @@ public class incomingCall extends BroadcastReceiver {
                             "\nUse Google map to see the detected position.";
                     if (compareTo.equals(numberPhone)) {
                         try {
+                            SmsManager smsManager = SmsManager.getDefault();
                             smsManager.sendTextMessage(numberPhone, null, MainActivity.message, null, null);
                             Log.v("SMS", "MESSAGE SENT SUCCESSFULLY!");
                         } catch (Exception e) {
