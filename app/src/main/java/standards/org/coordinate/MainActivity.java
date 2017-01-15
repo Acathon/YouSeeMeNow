@@ -101,7 +101,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 Log.v("GPS", "LATITUDE:  " + location.getLatitude() + " LONGITUDE: " + location.getLongitude() + " Accuracy: " + location.getAccuracy() + "M");
-                message = (location.getLatitude() + " " + location.getLongitude() + " around " + location.getAccuracy() + "M.");
+                //DEPRECATED :3
+                //message = (location.getLatitude() + " " + location.getLongitude() + " around " + location.getAccuracy() + "M.");
+                //
+                message = "http://maps.google.com/?ll=" + location.getLatitude() + "," + location.getLongitude() + " around " + location.getAccuracy() + "m.";
                 textView.setText("LATITUDE: " + location.getLatitude() + "\nLONGITUDE: " + location.getLongitude() + "\nACCURACY: " + location.getAccuracy()
                         + "\nLINKED: " + saved);
 
