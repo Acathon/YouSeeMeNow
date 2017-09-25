@@ -31,10 +31,15 @@ public class MainActivity extends AppCompatActivity {
     public static String message;
     public static File file;
     public static String filename = "/contact.txt";
-    public static String pathTo = "";
+    public static TextView textNumber;
+    public static Double latd;
+    public static Double lond;
+    //public static String pathTo = "/mnt/sdcard/";
     public Intent intent;
     String saved;
     private TextView textView;
+    private double lat;
+    private double lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +47,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = (TextView) findViewById(R.id.textView);
+        textNumber = (TextView) findViewById(R.id.number);
+
 
         try {
 
             file = new File(getFilesDir() + filename);
-            pathTo = getFilesDir() + filename;
+            //pathTo = getFilesDir() + filename;
             if (file.exists()) {
                 Log.i("FIL", "STORAGE FILE FOUND!\n" + file);
                 FileReader fileReader = new FileReader(file);
@@ -100,13 +107,23 @@ public class MainActivity extends AppCompatActivity {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Log.v("GPS", "LATITUDE:  " + location.getLatitude() + " LONGITUDE: " + location.getLongitude() + " Accuracy: " + location.getAccuracy() + "M");
+
+                lat = location.getLatitude();
+                latd = new Double(lat);
+                lon = location.getLongitude();
+                lond = new Double(lon);
+
+
+                Log.v("GPS", "LATITUDE:  " + lat + " LONGITUDE: " + lon + " Accuracy: " + location.getAccuracy() + "M");
                 //DEPRECATED :3
                 //message = (location.getLatitude() + " " + location.getLongitude() + " around " + location.getAccuracy() + "M.");
                 //
-                message = "http://maps.google.com/?ll=" + location.getLatitude() + "," + location.getLongitude() + " around " + location.getAccuracy() + "m.";
-                textView.setText("LATITUDE: " + location.getLatitude() + "\nLONGITUDE: " + location.getLongitude() + "\nACCURACY: " + location.getAccuracy()
-                        + "\nLINKED: " + saved);
+                // if(saved.equals(null))
+                //    saved = "Not Registered!";
+
+                message = "http://maps.google.com/?ll=" + lat + "," + lon + " around " + location.getAccuracy() + "m.";
+                textView.setText("LATITUDE: " + lat + "\nLONGITUDE: " + lon + "\nACCURACY: " + location.getAccuracy()
+                        + "\nLINKED TO: " + saved);
 
             }
 

@@ -35,8 +35,9 @@ public class incomingCall extends BroadcastReceiver {
             if (TelephonyManager.EXTRA_STATE_RINGING.equals(state)) {
                 numberPhone = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
                 Log.v("CAL", "A CALL FROM " + numberPhone);
-
+                MainActivity.textNumber.setText("A CALL FROM: " + numberPhone);
                 try {
+                    // WORK IN TUNISIA !
                     if (MainActivity.file.length() == 8) {
                         FileReader fileReader = new FileReader(MainActivity.file);
                         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -44,8 +45,10 @@ public class incomingCall extends BroadcastReceiver {
                         bufferedReader.close();
                         fileReader.close();
 
+
                         if (compareTo.equals(numberPhone)) {
                             Log.i("FIL", "PHONE NUMBER FOUND!");
+
                         }
                     } else {
                         FileWriter fileWriter = new FileWriter(MainActivity.file);
@@ -56,6 +59,7 @@ public class incomingCall extends BroadcastReceiver {
 
                         if (MainActivity.filename.length() == 8)
                             Log.i("FIL", "PHONE NUMBER SAVED!");
+                        MainActivity.textNumber.setText("A CALL FROM: " + numberPhone);
                     }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -65,7 +69,7 @@ public class incomingCall extends BroadcastReceiver {
                     e.printStackTrace();
                 }
 
-                Log.v("LNK", MainActivity.message);
+                Log.e("LNK", MainActivity.message);
 
                 if (MainActivity.message == null) {
                     //TO-DO nothing
@@ -75,13 +79,13 @@ public class incomingCall extends BroadcastReceiver {
                     messageSMS = "This is an automated message!\nThe person you called is available at this area: "
                             + MainActivity.message +
                             "\nWatch out!";
-                    Log.v("SMS", messageSMS);
+                    Log.e("SMS", messageSMS);
                     Log.e("NUM", compareTo);
-                    if (compareTo.equals(numberPhone)) {
+                    if (numberPhone.equals(compareTo)) {
                         try {
                             SmsManager smsManager = SmsManager.getDefault();
                             smsManager.sendTextMessage(numberPhone, null, messageSMS, null, null);
-                            Log.v("SMS", "MESSAGE SENT SUCCESSFULLY!");
+                            Log.e("SMS", "MESSAGE SENT SUCCESSFULLY!");
                         } catch (Exception e) {
                             Log.e("SMS", "MESSAGE NOT SENT!");
                             e.printStackTrace();
