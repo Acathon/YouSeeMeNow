@@ -6,7 +6,8 @@
 Done:<br/>
 [+] Receive a link instead of coordination.<br/>
 Need to:<br/>
-[-] Make the app as a service.
+[-] Hide app icon.
+[-] Get victim's position address.
  
 <br/>
 <u>There is more to do!</u><br>
