@@ -6,8 +6,8 @@
 Done:<br/>
 [+] Receive a link instead of coordination.<br/>
 Need to:<br/>
-[-] Hide app icon.
-[-] Get victim's position address.
+[-] Hide app icon.<br>
+[-] Get victim coordination.
  
 <br/>
 <u>There is more to do!</u><br>
