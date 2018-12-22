@@ -4,11 +4,11 @@
 <hr>
 
 Done:<br/>
+[+] Get victim coordination.
 [+] Receive a link instead of coordination.<br/>
 Need to:<br/>
 [-] Hide app icon.<br>
-[-] Get victim coordination.
+[-] Create another UI.<br>
  
 <br/>
 <u>There is more to do!</u><br>
-🕯 <i>Idea:</i>&nbsp;Mustapha Essouri
