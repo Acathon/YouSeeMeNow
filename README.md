@@ -4,7 +4,7 @@
 <hr>
 
 Done:<br/>
-[+] Get victim coordination.
+[+] Get victim coordination.<br/>
 [+] Receive a link instead of coordination.<br/>
 Need to:<br/>
 [-] Hide app icon.<br>
